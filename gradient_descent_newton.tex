@@ -28,7 +28,7 @@ Assume that we have a continuous function f defined on $\mathbb{R}$:
 Assume that f is also differentiable with derivative $f'(x)$.\\
 We also have a starting point $x_0$.\\
 Then we get $x_1$ by subtracting $f'(x_0) \cdot \alpha$ from x, where $\alpha$ is called the learning rate, which we can choose before doing this procedure.\\
-Usual values for $\alpha$ are $0,01$ or $0,05$.\\
+Usual values for $\alpha$ are $0.01$ or $0.05$.\\
 We iterate this, so that we get an array which is recursively defined as:\\
 \[x_{k+1} = x_k - f'(x_k) \cdot \alpha\]
 
@@ -95,5 +95,39 @@ In Newton's method generalized to more than one variables, the formula for the n
 (x_{k+1},y_{k+1}) = (x_k,y_k) - ( H_f^{-1}(x_k,y_k) \cdot \nabla f(x_k,y_k) )
 \]
 
+\section{Example of a function of two variables}
+We will look at this function:
+\[
+f(x,y) = 85 - \frac{1}{90}x^2(x-6)y^2(y-6)
+\]
+\begin{figure}[H]
+    \includegraphics{3D_plot.png}
+\end{figure}
+Visually we see a possible minimum near point $(x,y) = (4,4)$.
+We'll take $(x_0,y_0) = (1,1)$ and $\alpha = 0.01$ and from there, carry out gradient descent as actual example.\\
+
+For gradient descent, we know that we need the formula for the gradient:
+\[
+\nabla f(x,y) = \left( - \frac{1}{90}(3x^2-12x)y^2(y-6), - \frac{1}{90}x^2(x-6)(3y^2-12y) \right)
+\]
+When we fill in x=1 and y=1 we calculate a gradient of (-0.5, -0.5).\\
+We subtract this, multiplied by the learning rate, from (0, 0) and go to the next iteration.\\
+Here we continued with a Python script that produced the following output:\\
+
+{\footnotesize
+\begin{verbatim}
+0. x 1 y 1 --> (-0.500000000000000,-0.500000000000000)
+1. x 1.00500000000000 y 1.00500000000000 --> (-0.506184974895937,-0.506184974895937)
+2. x 1.01006184974896 y 1.01006184974896 --> (-0.512483652519824,-0.512483652519824)
+3. x 1.01518668627416 y 1.01518668627416 --> (-0.518898669704649,-0.518898669704649)
+...
+510. x 3.99999989719588 y 3.99999989719588 --> (-4.38630910259973E-7,-4.38630910259974E-7)
+511. x 3.99999990158219 y 3.99999990158219 --> (-4.19915991756169E-7,-4.19915991756170E-7)
+512. x 3.99999990578135 y 3.99999990578135 --> (-4.01999575849742E-7,-4.01999575849743E-7)
+513. x 3.99999990980134 y 3.99999990980134 --> (-3.84847593792869E-7,-3.84847593792870E-7)
+\end{verbatim}
+}
+We see (x,y) approach (4,4) and we see the gradient approach (0,0). It takes 513 iterations.
+We also tried learning rate 0.05. Then we saw the same behaviour, but only 104 iterations.
 
 \end{document}
