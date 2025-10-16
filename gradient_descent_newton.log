@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.11)  16 OCT 2025 18:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.11)  16 OCT 2025 20:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -306,6 +306,11 @@ Overfull \hbox (82.49588pt too wide) in paragraph at lines 128--128
 92869E-7,-3.84847593792870E-7)[] 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
+
+ []
+
 [6] (gradient_descent_newton.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
@@ -335,7 +340,7 @@ rogram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files
 /MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX/fonts
 /type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX/fonts/type1/publi
 c/amsfonts/symbols/msbm10.pfb>
-Output written on gradient_descent_newton.pdf (6 pages, 630931 bytes).
+Output written on gradient_descent_newton.pdf (6 pages, 631664 bytes).
 PDF statistics:
  108 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

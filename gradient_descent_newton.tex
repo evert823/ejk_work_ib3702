@@ -130,4 +130,20 @@ Here we continued with a Python script that produced the following output:\\
 We see (x,y) approach (4,4) and we see the gradient approach (0,0). It takes 513 iterations.
 We also tried learning rate 0.05. Then we saw the same behaviour, but only 104 iterations.
 
+Now we will try to find the minimum using Newton's method. For this we need the second order derivatives:\\
+\[
+\frac{\partial^2 f}{\partial x^2} = - \frac{1}{90}(6x-12)y^2(y-6)
+\]
+\[
+\frac{\partial^2 f}{\partial x \partial y} = - \frac{1}{90}(3x^2-12x)(3y^2-12y)
+\]
+\[
+\frac{\partial^2 f}{\partial y \partial x} = - \frac{1}{90}(3x^2-12x)(3y^2-12y)
+\]
+\[
+\frac{\partial^2 f}{\partial y^2} = - \frac{1}{90}x^2(x-6)(6y-12)
+\]
+
+
+
 \end{document}
