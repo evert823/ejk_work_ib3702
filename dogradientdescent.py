@@ -1,6 +1,13 @@
 from sympy import symbols, diff, sympify
 import math
 
+def values_are_equal(xv, yv, xv_new, yv_new):
+    if math.isclose(xv, xv_new, rel_tol=1e-4, abs_tol=1e-4) == False:
+        return False
+    if math.isclose(yv, yv_new, rel_tol=1e-4, abs_tol=1e-4) == False:
+        return False
+    return True
+
 def sympy_function(myformula):
     x = symbols('x')
     y = symbols('y')
@@ -28,12 +35,12 @@ def gradient_descent_step(xv, yv):
     return x_new, y_new
 
 myformula = '85 - (1 / 90) * x**2 * (x - 6) * y ** 2 * (y - 6)'
-myalpha = 0.05
+myalpha = 0.01
 iterations = 0
-xv = 1
-yv = 1
+xv = 3.2
+yv = 3.2
 xv_new, yv_new = gradient_descent_step(xv, yv)
-while math.isclose(xv, xv_new) == False or math.isclose(yv, yv_new) == False:
+while values_are_equal(xv, yv, xv_new, yv_new) == False:
     iterations += 1
     xv = xv_new
     yv = yv_new

@@ -121,14 +121,15 @@ Here we continued with a Python script that produced the following output:\\
 2. x 1.01006184974896 y 1.01006184974896 --> (-0.512483652519824,-0.512483652519824)
 3. x 1.01518668627416 y 1.01518668627416 --> (-0.518898669704649,-0.518898669704649)
 ...
-510. x 3.99999989719588 y 3.99999989719588 --> (-4.38630910259973E-7,-4.38630910259974E-7)
-511. x 3.99999990158219 y 3.99999990158219 --> (-4.19915991756169E-7,-4.19915991756170E-7)
-512. x 3.99999990578135 y 3.99999990578135 --> (-4.01999575849742E-7,-4.01999575849743E-7)
-513. x 3.99999990980134 y 3.99999990980134 --> (-3.84847593792869E-7,-3.84847593792870E-7)
+246. x 3.98976321048153 y 3.98976321048153 --> (-0.0435643360994635,-0.0435643360994638)
+247. x 3.99019885384252 y 3.99019885384252 --> (-0.0417150068300141,-0.0417150068300138)
+248. x 3.99061600391082 y 3.99061600391082 --> (-0.0399437948089941,-0.0399437948089938)
+249. x 3.99101544185891 y 3.99101544185891 --> (-0.0382474329314844,-0.0382474329314846)
 \end{verbatim}
 }
-We see (x,y) approach (4,4) and we see the gradient approach (0,0). It takes 513 iterations.
-We also tried learning rate 0.05. Then we saw the same behaviour, but only 104 iterations.
+We see (x,y) approach (4,4) and we see the gradient approach (0,0). It takes 249 iterations.
+We also tried learning rate 0.05. Then we saw the same behaviour, but only 56 iterations.
+A tolerance of 1e-4 was used for comparing floats.
 
 Now we will try to find the minimum using Newton's method. For this we need the second order derivatives:\\
 \[
@@ -143,6 +144,63 @@ Now we will try to find the minimum using Newton's method. For this we need the 
 \[
 \frac{\partial^2 f}{\partial y^2} = - \frac{1}{90}x^2(x-6)(6y-12)
 \]
+
+We implemented the steps above in a python script and saw the following output:
+{\footnotesize
+\begin{verbatim}
+(1.0000,1.0000) - (0.4054,0.4054) = (0.5946,0.5946)
+(0.5946,0.5946) - (0.2190,0.2190) = (0.3756,0.3756)
+(0.3756,0.3756) - (0.1327,0.1327) = (0.2429,0.2429)
+(0.2429,0.2429) - (0.0839,0.0839) = (0.1589,0.1589)
+(0.1589,0.1589) - (0.0542,0.0542) = (0.1047,0.1047)
+(0.1047,0.1047) - (0.0354,0.0354) = (0.0693,0.0693)
+(0.0693,0.0693) - (0.0233,0.0233) = (0.0460,0.0460)
+(0.0460,0.0460) - (0.0154,0.0154) = (0.0305,0.0305)
+(0.0305,0.0305) - (0.0102,0.0102) = (0.0203,0.0203)
+(0.0203,0.0203) - (0.0068,0.0068) = (0.0135,0.0135)
+(0.0135,0.0135) - (0.0045,0.0045) = (0.0090,0.0090)
+(0.0090,0.0090) - (0.0030,0.0030) = (0.0060,0.0060)
+(0.0060,0.0060) - (0.0020,0.0020) = (0.0040,0.0040)
+(0.0040,0.0040) - (0.0013,0.0013) = (0.0027,0.0027)
+(0.0027,0.0027) - (0.0009,0.0009) = (0.0018,0.0018)
+(0.0018,0.0018) - (0.0006,0.0006) = (0.0012,0.0012)
+(0.0012,0.0012) - (0.0004,0.0004) = (0.0008,0.0008)
+(0.0008,0.0008) - (0.0003,0.0003) = (0.0005,0.0005)
+(0.0005,0.0005) - (0.0002,0.0002) = (0.0004,0.0004)
+(0.0004,0.0004) - (0.0001,0.0001) = (0.0002,0.0002)
+(0.0002,0.0002) - (0.0001,0.0001) = (0.0002,0.0002)
+
+Hessian from last iteration: [[-4.37584933e-08 -8.75203986e-08]
+ [-8.75203986e-08 -4.37584933e-08]]
+Eigenvalues of Hessian: [-1.31278892e-07  4.37619053e-08]
+\end{verbatim}
+}
+This converges to point (0,0). The eigenvalues of the Hessian are almost zero.
+So Newton's method brings us from (1,1) to a stationary point (0,0) which is not a minimum.
+This happened from many other points. When we choose a starting point real close to (4,4) only then it will converge to our expected minimum:
+
+{\footnotesize
+\begin{verbatim}
+(3.2000,3.2000) - (-1.4933,-1.4933) = (4.6933,4.6933)
+(4.6933,4.6933) - (0.7598,0.7598) = (3.9336,3.9336)
+(3.9336,3.9336) - (-0.0677,-0.0677) = (4.0013,4.0013)
+(4.0013,4.0013) - (0.0013,0.0013) = (4.0000,4.0000)
+(4.0000,4.0000) - (0.0000,0.0000) = (4.0000,4.0000)
+
+Hessian from last iteration: [[ 4.26666750e+00 -2.45347276e-13]
+ [-2.45347276e-13  4.26666750e+00]]
+Eigenvalues of Hessian: [4.2666675 4.2666675]
+\end{verbatim}
+}
+The point reached here is indeed (4,4). The eigenvalues of the Hessian are positive, and indeed this is in line with that we already know,
+that (4,4) is a minimum.\\
+From (3.2,3.2) it took 5 iterations. When we try Gradient Descent from this point (3.2,3.2) we will see the number of iterations for that:
+{\footnotesize
+\begin{verbatim}
+Gradient Descent from (3.2,3.2) with learning rate 0.01 takes 109 iterations to reach (4,4).
+Gradient Descent from (3.2,3.2) with learning rate 0.05 takes 27 iterations to reach (4,4).
+\end{verbatim}
+}
 
 
 

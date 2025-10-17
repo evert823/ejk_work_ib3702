@@ -2,6 +2,13 @@ from sympy import symbols, diff, sympify
 import math
 import numpy as np
 
+def values_are_equal(xv, yv, xv_new, yv_new):
+    if math.isclose(xv, xv_new, rel_tol=1e-4, abs_tol=1e-4) == False:
+        return False
+    if math.isclose(yv, yv_new, rel_tol=1e-4, abs_tol=1e-4) == False:
+        return False
+    return True
+
 def sympy_function(myformula):
     x = symbols('x')
     y = symbols('y')
@@ -54,20 +61,23 @@ def newton_step(xv, yv):
     x_new = xv - step[0]
     y_new = yv - step[1]
 
-    print(f"({xv},{yv}) - ({step[0]},{step[1]}) = ({x_new},{y_new})")
-    print("------------")
+    print(f"({xv:.4f},{yv:.4f}) - ({step[0]:.4f},{step[1]:.4f}) = ({x_new:.4f},{y_new:.4f})")
 
-    return x_new, y_new
+    return x_new, y_new, H
 
 
-#myformula = '85 - (1 / 90) * x**2 * (x - 6) * y ** 2 * (y - 6)'
-myformula = '(x - 3)**2 + (y - 4)**2'
+myformula = '85 - (1 / 90) * x**2 * (x - 6) * y ** 2 * (y - 6)'
+#myformula = '(x - 3)**2 + (y - 4)**2'
 iterations = 0
-xv = 2
-yv = 2
-xv_new, yv_new = newton_step(xv, yv)
-while math.isclose(xv, xv_new) == False or math.isclose(yv, yv_new) == False:
+xv = 3.2
+yv = 3.2
+xv_new, yv_new, H = newton_step(xv, yv)
+while values_are_equal(xv, yv, xv_new, yv_new) == False:
     iterations += 1
     xv = xv_new
     yv = yv_new
-    xv_new, yv_new = newton_step(xv, yv)
+    xv_new, yv_new, H = newton_step(xv, yv)
+
+print(f"\nHessian from last iteration: {H}")
+eigs = np.linalg.eigvals(H)
+print(f"Eigenvalues of Hessian: {eigs}")
